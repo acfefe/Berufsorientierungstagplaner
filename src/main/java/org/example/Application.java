@@ -14,8 +14,6 @@ public class Application {
             // Press Umschalt+F9 to start debugging your code. We have set one breakpoint
             // for you, but you can always add more by pressing Strg+F8.
             System.out.println("i = " + i);
-            //Felix ist ein mieser Stinker und erstell komige Branches
-            System.out.println("Felix ist ein mieser Stinker und erstell komige Branches");
         }
     }
 }
