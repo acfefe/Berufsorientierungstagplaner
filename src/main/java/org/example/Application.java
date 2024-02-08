@@ -6,7 +6,7 @@ public class Application {
     public static void main(String[] args) {
         // Press Alt+Eingabe with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        System.out.printf("Hello and whalecum!");
 
         // Press Umschalt+F10 or click the green arrow button in the gutter to run the code.
         for (int i = 1; i <= 5; i++) {
