@@ -7,4 +7,6 @@ public class ApplicationController {
 
     private final FirmaController firmaController;
     private final SchuelerController schuelerController;
+
+
 }

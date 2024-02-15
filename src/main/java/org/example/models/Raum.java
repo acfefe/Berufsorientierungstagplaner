@@ -5,9 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class FirmaList {
+public class Raum {
+    String name;
 
-    private List<Firma> firmaList;
-
-
+    List<Zeitslot> zeitslots;
 }
