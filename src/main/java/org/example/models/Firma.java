@@ -12,7 +12,7 @@ public class Firma {
 
     int anzahlWuensche;
 
-    List<Zeitslot> verfügbareZeitslots;
+    List<Zeitslot> verfuegbareZeitslots;
 
-    List<Zeitslot>  gebuchteZeitslots;
+    List<Zeitslot> gebuchteZeitslots;
 }
