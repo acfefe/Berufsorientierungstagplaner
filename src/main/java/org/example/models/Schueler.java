@@ -2,6 +2,8 @@ package org.example.models;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Schueler {
     String klasse;
@@ -12,5 +14,5 @@ public class Schueler {
 
     int[] wahlen = new int[6];
 
-    int[] belegungen = new int[5];
+    List<Zeitslot> belegungen;
 }
