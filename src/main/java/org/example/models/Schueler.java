@@ -1,7 +1,14 @@
 package org.example.models;
 
+import lombok.Data;
+
 import java.util.List;
 
-public record Schueler(String klasse, String vorname, String nachname, int[] wahlen, List<Zeitslot> belegungen) {
-
+@Data
+public class Schueler {
+    List<Zeitslot> belegungen;
+    private String klasse;
+    private String vorname;
+    private String nachname;
+    private int[] wahlen;
 }

@@ -1,7 +1,11 @@
 package org.example.models;
 
+import lombok.Data;
+
 import java.util.List;
 
-public record FirmaList(List<Firma> firmen) {
+@Data
+public class FirmaList {
+    private List<Firma> firmen;
 
 }

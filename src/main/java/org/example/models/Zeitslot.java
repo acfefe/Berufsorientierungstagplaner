@@ -1,7 +1,12 @@
 package org.example.models;
 
+import lombok.Data;
+
 import java.util.List;
 
-public record Zeitslot(Firma firma, List<Schueler> schuelerList) {
+@Data
+public class Zeitslot {
 
+    private Firma firma;
+    private List<Schueler> schuelerList;
 }
