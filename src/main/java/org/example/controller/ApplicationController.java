@@ -15,20 +15,20 @@ public class ApplicationController {
 
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
-        for (Firma firma : firmaController.getFirmaList().firmen()) {
+        for(Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlWuensche = 0;
-            for (Schueler schueler : schuelerController.getSchuelerList().schueler()) {
-                if (Arrays.stream(schueler.wahlen()).anyMatch(whl -> whl == firma.firmenID())) {
+            for(Schueler schueler: schuelerController.getSchuelerList().getSchueler()) {
+                if(Arrays.stream(schueler.getWahlen()).anyMatch(whl ->  whl == firma.getFirmenID())) {
                     anzahlWuensche++;
                 }
             }
-            firma.anzahlWuensche(anzahlWuensche);
+            firma.setAnzahlWuensche(anzahlWuensche);
         }
     }
 
     public void assignRooms() {
-        for (Firma firma : firmaController.getFirmaList().firmen()) {
-            int anzahlVeranstaltungen = firma.anzahlWuensche() / firma.maximaleAnzahlSchueler();
+        for(Firma firma : firmaController.getFirmaList().getFirmen()) {
+            int anzahlVeranstaltungen = (int)Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
         }
     }
 }

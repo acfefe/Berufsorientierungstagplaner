@@ -7,4 +7,5 @@ import org.example.models.FirmaList;
 public class FirmaController {
 
     private FirmaList firmaList;
+
 }

@@ -13,5 +13,4 @@ public class Firma {
     private List<Zeitslot> verfuegbareZeiten;
     private int maximaleAnzahlSchueler;
     private List<Zeitslot> gebuchteZeitslots;
-
 }
