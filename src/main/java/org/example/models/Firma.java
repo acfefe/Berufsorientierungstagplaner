@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class Firma {
+
     private String name;
     private int firmenID;
     private int anzahlWuensche;

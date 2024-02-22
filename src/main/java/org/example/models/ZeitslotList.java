@@ -5,8 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class SchuelerList {
+public class ZeitslotList {
 
-    private List<Schueler> schueler;
-
+    private List<Zeitslot> zeitslots;
 }
