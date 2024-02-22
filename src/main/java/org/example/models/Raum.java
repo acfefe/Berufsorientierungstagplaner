@@ -1,12 +1,7 @@
 package org.example.models;
 
-import lombok.Data;
-
 import java.util.List;
 
-@Data
-public class Raum {
-    String name;
+public record Raum(String name, List<Zeitslot> zeitslots) {
 
-    List<Zeitslot> zeitslots;
 }

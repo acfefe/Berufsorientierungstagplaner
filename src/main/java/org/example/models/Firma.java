@@ -1,18 +1,8 @@
 package org.example.models;
 
-import lombok.Data;
-
 import java.util.List;
 
-@Data
-public class Firma {
-    String name;
+public record Firma(String name, int firmenID, int anzahlWuensche, List<Zeitslot> verfuegbareZeiten,
+                    List<Zeitslot> gebuchteZeitslots) {
 
-    int firmenId;
-
-    int anzahlWuensche;
-
-    List<Zeitslot> verfuegbareZeitslots;
-
-    List<Zeitslot> gebuchteZeitslots;
 }
