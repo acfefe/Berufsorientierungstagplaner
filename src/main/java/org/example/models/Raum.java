@@ -10,4 +10,8 @@ public class Raum {
     private String name;
     private List<Zeitslot> zeitslots;
 
+    public Raum(String name) {
+        this.name = name;
+    }
+
 }
