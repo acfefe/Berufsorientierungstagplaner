@@ -15,10 +15,12 @@ public class ApplicationController {
 
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
-        for(Firma firma : firmaController.getFirmaList().getFirmen()) {
+        for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlWuensche = 0;
-            for(Schueler schueler: schuelerController.getSchuelerList().getSchueler()) {
-                if(Arrays.stream(schueler.getWahlen()).anyMatch(whl ->  whl == firma.getFirmenID())) {
+            for (Schueler schueler : schuelerController.getSchuelerList().getSchueler()) {
+                if (Arrays.stream(schueler.getWahlen())
+                        .anyMatch(whl ->
+                                whl == firma.getFirmenID())) {
                     anzahlWuensche++;
                 }
             }
@@ -27,8 +29,8 @@ public class ApplicationController {
     }
 
     public void assignRooms() {
-        for(Firma firma : firmaController.getFirmaList().getFirmen()) {
-            int anzahlVeranstaltungen = (int)Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
+        for (Firma firma : firmaController.getFirmaList().getFirmen()) {
+            int anzahlVeranstaltungen = (int) Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
         }
     }
 }

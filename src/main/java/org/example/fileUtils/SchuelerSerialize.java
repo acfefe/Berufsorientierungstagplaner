@@ -28,12 +28,12 @@ public class SchuelerSerialize {
                 schueler.setNachname(row.getCellText(1));
                 schueler.setVorname(row.getCellText(2));
                 int[] wahlen = {
-                        Integer.parseInt(row.getCellText(3)),
-                        Integer.parseInt(row.getCellText(4)),
-                        Integer.parseInt(row.getCellText(5)),
-                        Integer.parseInt(row.getCellText(6)),
-                        Integer.parseInt(row.getCellText(7)),
-                        Integer.parseInt(row.getCellText(8)),
+                        Integer.parseInt(!row.getCellText(3).isEmpty() ? row.getCellText(3) : "0"),
+                        Integer.parseInt(!row.getCellText(4).isEmpty() ? row.getCellText(4) : "0"),
+                        Integer.parseInt(!row.getCellText(5).isEmpty() ? row.getCellText(5) : "0"),
+                        Integer.parseInt(!row.getCellText(6).isEmpty() ? row.getCellText(6) : "0"),
+                        Integer.parseInt(!row.getCellText(7).isEmpty() ? row.getCellText(7) : "0"),
+                        Integer.parseInt(!row.getCellText(8).isEmpty() ? row.getCellText(8) : "0"),
 
                 };
                 schueler.setWahlen(wahlen);
