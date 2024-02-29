@@ -15,6 +15,13 @@ public class ApplicationController {
     private final ZeitslotController zeitslotController;
     private final MainFrame mainFrame;
 
+    public ApplicationController(FirmaController firmaController, SchuelerController schuelerController, ZeitslotController zeitslotController, MainFrame mainFrame) {
+        this.firmaController = firmaController;
+        this.schuelerController = schuelerController;
+        this.zeitslotController = zeitslotController;
+        this.mainFrame = mainFrame;
+        this.schuelerController.loadSchueler();
+    }
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {

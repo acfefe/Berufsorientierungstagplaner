@@ -4,6 +4,7 @@ import javax.swing.*;
 
 public class FirmaPanel extends JPanel {
 
+    
     public FirmaPanel() {
         initialize();
     }

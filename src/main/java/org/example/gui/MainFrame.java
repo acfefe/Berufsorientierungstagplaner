@@ -40,24 +40,22 @@ public class MainFrame extends JFrame {
         viewMenu.add(viewSchueler);
         viewMenu.add(viewFirma);
 
-
-//        this.pack();
         this.setVisible(true);
     }
 
     public void viewSchueler() {
         this.viewSchueler.addActionListener(e -> {
             this.setContentPane(schuelerPanel);
-            this.repaint();
             this.revalidate();
+            this.repaint();
         });
     }
 
     public void viewFirma() {
         this.viewFirma.addActionListener(e -> {
             this.setContentPane(firmaPanel);
-            this.repaint();
             this.revalidate();
+            this.repaint();
         });
     }
 }
