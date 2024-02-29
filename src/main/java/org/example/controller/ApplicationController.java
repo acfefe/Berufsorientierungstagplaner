@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import lombok.Data;
+import org.example.gui.MainFrame;
 import org.example.models.Firma;
 import org.example.models.Schueler;
 
@@ -12,6 +13,7 @@ public class ApplicationController {
     private final FirmaController firmaController;
     private final SchuelerController schuelerController;
     private final ZeitslotController zeitslotController;
+    private final MainFrame mainFrame;
 
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
