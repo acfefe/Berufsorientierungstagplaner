@@ -5,7 +5,9 @@ import org.example.gui.MainFrame;
 import org.example.models.Firma;
 import org.example.models.Schueler;
 
+import javax.swing.*;
 import java.util.Arrays;
+import java.util.jar.JarFile;
 
 @Data
 public class ApplicationController {
@@ -20,8 +22,7 @@ public class ApplicationController {
         this.schuelerController = schuelerController;
         this.zeitslotController = zeitslotController;
         this.mainFrame = mainFrame;
-        this.schuelerController.loadSchueler();
-        this.firmaController.loadFirma();
+        loadFirma();
     }
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
@@ -43,4 +44,11 @@ public class ApplicationController {
             int anzahlVeranstaltungen = (int) Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
         }
     }
+
+    public void loadFirma() {
+        this.mainFrame.getLoadSchueler().addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+        });
+    }
+
 }

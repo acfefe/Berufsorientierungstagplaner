@@ -1,6 +1,8 @@
 package org.example;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import org.example.controller.ApplicationController;
 import org.example.controller.FirmaController;
 import org.example.controller.SchuelerController;
@@ -21,15 +23,15 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Application {
     public static void main(String[] args) throws IOException {
-        FlatDarkLaf.setup();
+        FlatLightLaf.setup();
 
-        List<Firma> firmen = FirmaSerialize.readExcelIntoList(Path.of("/home/justin/Schreibtisch/Code/Java/Berufsorientierungstagplaner/src/main/resources/IMPORT BOT1_Veranstaltungsliste.xlsx"));
-        FirmaList firmaList = new FirmaList(firmen);
+        //List<Firma> firmen = FirmaSerialize.readExcelIntoList(Path.of("/home/justin/Schreibtisch/Code/Java/Berufsorientierungstagplaner/src/main/resources/IMPORT BOT1_Veranstaltungsliste.xlsx"));
+        FirmaList firmaList = new FirmaList(List.of());
         FirmaPanel firmaPanel = new FirmaPanel();
         FirmaController firmaController = new FirmaController(firmaList, firmaPanel);
 
-        List<Schueler> schueler = SchuelerSerialize.readExcelIntoList(Path.of("/home/justin/Schreibtisch/Code/Java/Berufsorientierungstagplaner/src/main/resources/IMPORT BOT2_Wahl.xlsx"));
-        SchuelerList schuelerList = new SchuelerList(schueler);
+        //List<Schueler> schueler = SchuelerSerialize.readExcelIntoList(Path.of("/home/justin/Schreibtisch/Code/Java/Berufsorientierungstagplaner/src/main/resources/IMPORT BOT2_Wahl.xlsx"));
+        SchuelerList schuelerList = new SchuelerList(List.of());
         SchuelerPanel schuelerPanel = new SchuelerPanel();
         SchuelerController schuelerController = new SchuelerController(schuelerList, schuelerPanel);
 
