@@ -6,6 +6,8 @@ import org.example.models.Firma;
 import org.example.models.Schueler;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.jar.JarFile;
 
@@ -16,14 +18,18 @@ public class ApplicationController {
     private final SchuelerController schuelerController;
     private final ZeitslotController zeitslotController;
     private final MainFrame mainFrame;
+    private Path firmaPath;
+    private Path schuelerPath;
 
     public ApplicationController(FirmaController firmaController, SchuelerController schuelerController, ZeitslotController zeitslotController, MainFrame mainFrame) {
         this.firmaController = firmaController;
         this.schuelerController = schuelerController;
         this.zeitslotController = zeitslotController;
         this.mainFrame = mainFrame;
-        loadFirma();
+        openSchuelerFile();
     }
+
+
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
@@ -45,10 +51,43 @@ public class ApplicationController {
         }
     }
 
-    public void loadFirma() {
+    public void openSchuelerFile() {
         this.mainFrame.getLoadSchueler().addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
+            JFileChooser jFileChooser = new JFileChooser();
+
+            jFileChooser.setAcceptAllFileFilterUsed(false);
+
+            jFileChooser.setDialogTitle("Wähle die Schueler-Excel-Liste aus");
+
+            FileNameExtensionFilter restrict = new FileNameExtensionFilter(".xlsx", "xlsx");
+            jFileChooser.addChoosableFileFilter(restrict);
+
+            int opt = jFileChooser.showOpenDialog(null);
+
+            if (opt == JFileChooser.APPROVE_OPTION)
+                this.schuelerPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
         });
     }
+
+    public void openFirmaFile() {
+        this.mainFrame.getLoadFirma().addActionListener(e->{
+            JFileChooser jFileChooser = new JFileChooser();
+
+            jFileChooser.setAcceptAllFileFilterUsed(false);
+
+            jFileChooser.setDialogTitle("Wähle die Firmen-Excel-Liste aus");
+
+            FileNameExtensionFilter restrict = new FileNameExtensionFilter(".xlsx", "xlsx");
+            jFileChooser.addChoosableFileFilter(restrict);
+
+            int opt = jFileChooser.showOpenDialog(null);
+
+            if (opt == JFileChooser.APPROVE_OPTION)
+                this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
+        });
+    }
+
+
+
 
 }

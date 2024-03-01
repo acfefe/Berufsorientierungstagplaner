@@ -23,7 +23,7 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Application {
     public static void main(String[] args) throws IOException {
-        FlatLightLaf.setup();
+        FlatDarkLaf.setup();
 
         //List<Firma> firmen = FirmaSerialize.readExcelIntoList(Path.of("/home/justin/Schreibtisch/Code/Java/Berufsorientierungstagplaner/src/main/resources/IMPORT BOT1_Veranstaltungsliste.xlsx"));
         FirmaList firmaList = new FirmaList(List.of());
