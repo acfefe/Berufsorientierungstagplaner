@@ -5,6 +5,7 @@ import org.dhatim.fastexcel.reader.Row;
 import org.dhatim.fastexcel.reader.Sheet;
 import org.example.models.Firma;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -14,6 +15,10 @@ import java.util.List;
 public class FirmaSerialize {
 
     public static List<Firma> readExcelIntoList(Path path) throws IOException {
+        File fileTest = path.toFile();
+        if (!fileTest.exists()) {
+            return List.of();
+        }
         List<Firma> FirmaList = new ArrayList<>();
 
         try (FileInputStream file = new FileInputStream(path.toFile());

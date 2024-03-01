@@ -7,8 +7,8 @@ import java.util.List;
 @Data
 public class Firma {
 
-    private String name;
     private int firmenID;
+    private String name;
     private int anzahlWuensche;
     private List<Zeitslot> verfuegbareZeiten;
     private int maximaleAnzahlSchueler;

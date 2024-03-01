@@ -5,6 +5,7 @@ import org.dhatim.fastexcel.reader.ReadableWorkbook;
 import org.dhatim.fastexcel.reader.Sheet;
 import org.example.models.Raum;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,6 +16,10 @@ import java.util.List;
 public class RaumSerialize {
 
     public static List<Raum> readExcelIntoList(Path path) throws IOException {
+        File fileTest = path.toFile();
+        if (!fileTest.exists()) {
+            return List.of();
+        }
         List<Raum> raumList = new ArrayList<>();
 
         try (FileInputStream file = new FileInputStream(path.toFile());
