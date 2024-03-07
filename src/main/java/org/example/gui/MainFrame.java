@@ -8,7 +8,6 @@ import java.nio.file.Path;
 
 @Data
 public class MainFrame extends JFrame {
-
     private final SchuelerPanel schuelerPanel;
     private final FirmaPanel firmaPanel;
     private final RaumPanel raumPanel;
