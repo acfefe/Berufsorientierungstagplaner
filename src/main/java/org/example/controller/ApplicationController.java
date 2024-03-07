@@ -13,15 +13,18 @@ public class ApplicationController {
     private final FirmaController firmaController;
     private final SchuelerController schuelerController;
     private final ZeitslotController zeitslotController;
+    private final RaumController raumController;
     private final MainFrame mainFrame;
 
-    public ApplicationController(FirmaController firmaController, SchuelerController schuelerController, ZeitslotController zeitslotController, MainFrame mainFrame) {
+    public ApplicationController(FirmaController firmaController, SchuelerController schuelerController, ZeitslotController zeitslotController, RaumController raumController, MainFrame mainFrame) {
         this.firmaController = firmaController;
         this.schuelerController = schuelerController;
         this.zeitslotController = zeitslotController;
+        this.raumController = raumController;
         this.mainFrame = mainFrame;
         this.schuelerController.loadSchueler();
         this.firmaController.loadFirma();
+        this.raumController.loadRaum();
     }
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {

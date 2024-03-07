@@ -7,26 +7,26 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 @Data
-public class FirmaPanel extends JPanel {
+public class RaumPanel extends JPanel {
 
-    private final DefaultTableModel firmaTableModel = new DefaultTableModel(new Object[]{"ID", "Name", "AnzahlWünsche", "maximaleAnzahl"}, 0) {
+    private final DefaultTableModel raumTableModel = new DefaultTableModel(new Object[]{"name"}, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
-    private final JTable firmaTable = new JTable(firmaTableModel);
-    private final JScrollPane firmaTableScrollPane = new JScrollPane(firmaTable);
+    private final JTable raumTable = new JTable(raumTableModel);
+    private final JScrollPane raumTableScrollPane = new JScrollPane(raumTable);
 
-    public FirmaPanel() {
+    public RaumPanel() {
         initialize();
     }
 
-    public void initialize() {
+    private void initialize() {
         this.setLayout(new BorderLayout());
-        this.add(this.firmaTableScrollPane, BorderLayout.CENTER);
+        this.add(this.raumTableScrollPane, BorderLayout.CENTER);
 
-        this.firmaTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.raumTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JPanel titlePanel = new JPanel();
         JLabel titleLabel = new JLabel(this.getClass().getSimpleName());
