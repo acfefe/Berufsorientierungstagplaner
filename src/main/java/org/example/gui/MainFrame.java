@@ -8,20 +8,25 @@ import java.nio.file.Path;
 
 @Data
 public class MainFrame extends JFrame {
+
     private final SchuelerPanel schuelerPanel;
     private final FirmaPanel firmaPanel;
+    private final RaumPanel raumPanel;
 
     private final JMenuItem viewSchueler = new JMenuItem("Schüler");
     private final JMenuItem viewFirma = new JMenuItem("Firma");
     private final JMenuItem loadSchueler = new JMenuItem("Schüler");
     private final JMenuItem loadFirma = new JMenuItem("Firma");
+    private final JMenuItem viewRaum = new JMenuItem("Raum");
 
-    public MainFrame(SchuelerPanel schuelerPanel, FirmaPanel firmaPanel) {
+    public MainFrame(SchuelerPanel schuelerPanel, FirmaPanel firmaPanel, RaumPanel raumPanel) {
         this.schuelerPanel = schuelerPanel;
         this.firmaPanel = firmaPanel;
+        this.raumPanel = raumPanel;
         initialize();
         viewSchueler();
         viewFirma();
+        viewRaum();
     }
 
     public void initialize() {
@@ -48,13 +53,16 @@ public class MainFrame extends JFrame {
 
         viewMenu.add(this.viewSchueler);
         viewMenu.add(this.viewFirma);
+        viewMenu.add(this.viewSchueler);
+        viewMenu.add(this.viewFirma);
+        viewMenu.add(this.viewRaum);
 
         this.setVisible(true);
     }
 
     public void viewSchueler() {
         this.viewSchueler.addActionListener(e -> {
-            this.setContentPane(schuelerPanel);
+            this.setContentPane(this.schuelerPanel);
             this.revalidate();
             this.repaint();
         });
@@ -62,7 +70,15 @@ public class MainFrame extends JFrame {
 
     public void viewFirma() {
         this.viewFirma.addActionListener(e -> {
-            this.setContentPane(firmaPanel);
+            this.setContentPane(this.firmaPanel);
+            this.revalidate();
+            this.repaint();
+        });
+    }
+
+    public void viewRaum() {
+        this.viewRaum.addActionListener(e -> {
+            this.setContentPane(this.raumPanel);
             this.revalidate();
             this.repaint();
         });
