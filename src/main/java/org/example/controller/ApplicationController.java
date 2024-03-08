@@ -3,12 +3,14 @@ package org.example.controller;
 import lombok.Data;
 import org.example.gui.MainFrame;
 import org.example.models.Firma;
+import org.example.models.Raum;
 import org.example.models.Schueler;
+import org.example.models.Zeitslot;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.*;
 import java.util.jar.JarFile;
 
 @Data
@@ -50,20 +52,35 @@ public class ApplicationController {
     }
 
     public void assignRooms() {
+
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlVeranstaltungen = (int) Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
+            firma.setAnzahlVeranstaltung(anzahlVeranstaltungen);
+        }
+        Collections.sort(firmaController.getFirmaList().getFirmen(), Comparator.comparingInt(Firma::getAnzahlVeranstaltung));
+        for (Firma firma : firmaController.getFirmaList().getFirmen()) {
+            for(int i = 0;i < firma.getAnzahlVeranstaltung();) {
+                List<Raum> raumListe = raumController.getRaumList().getRaumList();
+                for (Raum raum:
+                     raumListe) {
+                    if(raum.getZeitslots().size() < 5) {
+                        List<Zeitslot> zeitslots = new ArrayList<>();
+                        for(int j = i;j < 5 - raum.getZeitslots().size(); j++) {
+                            zeitslots.add(new Zeitslot(firma, raum, new ArrayList<>()));
+                        }
+                        i += 5 - raum.getZeitslots().size();
+                        zeitslots.addAll(0, raum.getZeitslots());
+                        raum.setZeitslots(zeitslots);
+                    }
+                }
+            }
         }
     }
 
     public void openSchuelerFile() {
-<<<<<<< HEAD
         this.mainFrame.getLoadSchueler().addActionListener( e -> {
             JFileChooser jFileChooser = new JFileChooser();
-=======
-        this.mainFrame.getLoadSchueler().addActionListener(e -> {
-            JFileChooser jFileChooser = new JFileChooser();
 
->>>>>>> 66bd5c8261f850ced06be330b4da331127850e66
             jFileChooser.setAcceptAllFileFilterUsed(false);
 
             jFileChooser.setDialogTitle("Wähle die Schueler-Excel-Liste aus");
@@ -95,11 +112,4 @@ public class ApplicationController {
                 this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
         });
     }
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> 66bd5c8261f850ced06be330b4da331127850e66
 }
