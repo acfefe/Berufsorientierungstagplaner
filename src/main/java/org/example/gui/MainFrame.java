@@ -14,6 +14,8 @@ public class MainFrame extends JFrame {
     private final JMenuItem viewSchueler = new JMenuItem("Schüler");
     private final JMenuItem viewFirma = new JMenuItem("Firma");
     private final JMenuItem viewRaum = new JMenuItem("Raum");
+    private final JMenuItem loadSchueler = new JMenuItem("Schueler");
+    private final JMenuItem loadFirma = new JMenuItem("Firma");
 
     public MainFrame(SchuelerPanel schuelerPanel, FirmaPanel firmaPanel, RaumPanel raumPanel) {
         this.schuelerPanel = schuelerPanel;
@@ -36,10 +38,17 @@ public class MainFrame extends JFrame {
         JMenu editMenu = new JMenu("Edit");
         JMenu viewMenu = new JMenu("View");
 
+        JMenu loadDataMenu = new JMenu("Open");
+
         this.setJMenuBar(menuBar);
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
         menuBar.add(viewMenu);
+
+        fileMenu.add(loadDataMenu);
+        loadDataMenu.add(this.loadSchueler);
+        loadDataMenu.add(this.loadFirma);
+
 
         viewMenu.add(this.viewSchueler);
         viewMenu.add(this.viewFirma);

@@ -5,6 +5,9 @@ import org.example.gui.MainFrame;
 import org.example.models.Firma;
 import org.example.models.Schueler;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 @Data
@@ -15,6 +18,8 @@ public class ApplicationController {
     private final ZeitslotController zeitslotController;
     private final RaumController raumController;
     private final MainFrame mainFrame;
+    private Path firmaPath;
+    private Path schuelerPath;
 
     public ApplicationController(FirmaController firmaController, SchuelerController schuelerController, ZeitslotController zeitslotController, RaumController raumController, MainFrame mainFrame) {
         this.firmaController = firmaController;
@@ -25,6 +30,7 @@ public class ApplicationController {
         this.schuelerController.loadSchueler();
         this.firmaController.loadFirma();
         this.raumController.loadRaum();
+        openSchuelerFile();
     }
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
@@ -45,5 +51,40 @@ public class ApplicationController {
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlVeranstaltungen = (int) Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
         }
+    }
+
+    public void openSchuelerFile() {
+        this.mainFrame.getLoadSchueler().addActionListener( e -> {
+            JFileChooser jFileChooser = new JFileChooser();
+            jFileChooser.setAcceptAllFileFilterUsed(false);
+
+            jFileChooser.setDialogTitle("Wähle die Schueler-Excel-Liste aus");
+
+            FileNameExtensionFilter restrict = new FileNameExtensionFilter(".xlsx", "xlsx");
+            jFileChooser.addChoosableFileFilter(restrict);
+
+            int opt = jFileChooser.showOpenDialog(null);
+
+            if (opt == JFileChooser.APPROVE_OPTION)
+                this.schuelerPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
+        });
+    }
+
+    public void openFirmaFile() {
+        this.mainFrame.getLoadFirma().addActionListener(e->{
+            JFileChooser jFileChooser = new JFileChooser();
+
+            jFileChooser.setAcceptAllFileFilterUsed(false);
+
+            jFileChooser.setDialogTitle("Wähle die Firmen-Excel-Liste aus");
+
+            FileNameExtensionFilter restrict = new FileNameExtensionFilter(".xlsx", "xlsx");
+            jFileChooser.addChoosableFileFilter(restrict);
+
+            int opt = jFileChooser.showOpenDialog(null);
+
+            if (opt == JFileChooser.APPROVE_OPTION)
+                this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
+        });
     }
 }
