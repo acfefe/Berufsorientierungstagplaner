@@ -3,19 +3,20 @@ package org.example.gui;
 import lombok.Data;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.nio.file.Path;
 
 @Data
 public class MainFrame extends JFrame {
-
     private final SchuelerPanel schuelerPanel;
     private final FirmaPanel firmaPanel;
     private final RaumPanel raumPanel;
 
     private final JMenuItem viewSchueler = new JMenuItem("Schüler");
     private final JMenuItem viewFirma = new JMenuItem("Firma");
-    private final JMenuItem viewRaum = new JMenuItem("Raum");
-    private final JMenuItem loadSchueler = new JMenuItem("Schueler");
+    private final JMenuItem loadSchueler = new JMenuItem("Schüler");
     private final JMenuItem loadFirma = new JMenuItem("Firma");
+    private final JMenuItem viewRaum = new JMenuItem("Raum");
 
     public MainFrame(SchuelerPanel schuelerPanel, FirmaPanel firmaPanel, RaumPanel raumPanel) {
         this.schuelerPanel = schuelerPanel;
@@ -48,7 +49,6 @@ public class MainFrame extends JFrame {
         fileMenu.add(loadDataMenu);
         loadDataMenu.add(this.loadSchueler);
         loadDataMenu.add(this.loadFirma);
-
 
         viewMenu.add(this.viewSchueler);
         viewMenu.add(this.viewFirma);

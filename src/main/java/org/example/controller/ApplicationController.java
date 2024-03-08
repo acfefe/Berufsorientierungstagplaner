@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.jar.JarFile;
 
 @Data
 public class ApplicationController {
@@ -27,6 +28,7 @@ public class ApplicationController {
         this.zeitslotController = zeitslotController;
         this.raumController = raumController;
         this.mainFrame = mainFrame;
+        openSchuelerFile();
         this.schuelerController.loadSchueler();
         this.firmaController.loadFirma();
         this.raumController.loadRaum();
@@ -54,8 +56,14 @@ public class ApplicationController {
     }
 
     public void openSchuelerFile() {
+<<<<<<< HEAD
         this.mainFrame.getLoadSchueler().addActionListener( e -> {
             JFileChooser jFileChooser = new JFileChooser();
+=======
+        this.mainFrame.getLoadSchueler().addActionListener(e -> {
+            JFileChooser jFileChooser = new JFileChooser();
+
+>>>>>>> 66bd5c8261f850ced06be330b4da331127850e66
             jFileChooser.setAcceptAllFileFilterUsed(false);
 
             jFileChooser.setDialogTitle("Wähle die Schueler-Excel-Liste aus");
@@ -87,4 +95,11 @@ public class ApplicationController {
                 this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
         });
     }
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 66bd5c8261f850ced06be330b4da331127850e66
 }
