@@ -30,11 +30,11 @@ public class ApplicationController {
         this.zeitslotController = zeitslotController;
         this.raumController = raumController;
         this.mainFrame = mainFrame;
-        openSchuelerFile();
         this.schuelerController.loadSchueler();
         this.firmaController.loadFirma();
         this.raumController.loadRaum();
         openSchuelerFile();
+        openFirmaFile();
     }
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
@@ -52,7 +52,6 @@ public class ApplicationController {
     }
 
     public void assignRooms() {
-
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlVeranstaltungen = (int) Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
             firma.setAnzahlVeranstaltung(anzahlVeranstaltungen);
