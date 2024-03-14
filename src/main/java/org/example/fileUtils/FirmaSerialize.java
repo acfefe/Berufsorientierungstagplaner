@@ -17,7 +17,7 @@ public class FirmaSerialize {
     public static List<Firma> readExcelIntoList(Path path) throws IOException {
         File fileTest = path.toFile();
         if (!fileTest.exists()) {
-            return List.of();
+            return new ArrayList<>();
         }
         List<Firma> FirmaList = new ArrayList<>();
 

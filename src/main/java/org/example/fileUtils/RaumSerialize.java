@@ -1,15 +1,12 @@
 package org.example.fileUtils;
 
 import lombok.Data;
-import org.dhatim.fastexcel.Workbook;
-import org.dhatim.fastexcel.Worksheet;
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
 import org.dhatim.fastexcel.reader.Sheet;
 import org.example.models.Raum;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ public class RaumSerialize {
     public static List<Raum> readExcelIntoList(Path path) throws IOException {
         File fileTest = path.toFile();
         if (!fileTest.exists()) {
-            return List.of();
+            return new ArrayList<>();
         }
         List<Raum> raumList = new ArrayList<>();
 
@@ -35,7 +32,6 @@ public class RaumSerialize {
         }
         return raumList;
     }
-
 
 
 }

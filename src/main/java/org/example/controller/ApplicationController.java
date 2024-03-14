@@ -10,7 +10,10 @@ import org.example.models.Zeitslot;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 @Data
 public class ApplicationController {
@@ -54,18 +57,17 @@ public class ApplicationController {
     public void assignRooms() {
         List<Raum> raumListe = raumController.getRaumList().getRaumList();
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
-            int anzahlVeranstaltungen = (int) Math.ceil((double)firma.getAnzahlWuensche() / (double)firma.getMaximaleAnzahlSchueler());
+            int anzahlVeranstaltungen = (int) Math.ceil((double) firma.getAnzahlWuensche() / (double) firma.getMaximaleAnzahlSchueler());
             firma.setAnzahlVeranstaltung(anzahlVeranstaltungen);
             firma.setGebuchteZeitslots(new ArrayList<>());
         }
-        Collections.sort(firmaController.getFirmaList().getFirmen(), Comparator.comparingInt(Firma::getAnzahlVeranstaltung).reversed());
+        firmaController.getFirmaList().getFirmen().sort(Comparator.comparingInt(Firma::getAnzahlVeranstaltung).reversed());
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
-            for(int i = 0;i < firma.getAnzahlVeranstaltung();) {
-                for (Raum raum:
-                     raumListe) {
+            for (int i = 0; i < firma.getAnzahlVeranstaltung(); ) {
+                for (Raum raum : raumListe) {
                     Zeitslot[] zeitslots = raum.getZeitslots();
-                    for (int j = 0;j < zeitslots.length;j++) {
-                        if(zeitslots[j] == null) {
+                    for (int j = 0; j < zeitslots.length; j++) {
+                        if (zeitslots[j] == null) {
                             Zeitslot zeitslot = new Zeitslot(firma, raum, new ArrayList<>());
                             firma.getGebuchteZeitslots().add(zeitslot);
                             zeitslots[j] = zeitslot;
@@ -81,7 +83,7 @@ public class ApplicationController {
     }
 
     public void openSchuelerFile() {
-        this.mainFrame.getLoadSchueler().addActionListener( e -> {
+        this.mainFrame.getLoadSchueler().addActionListener(e -> {
             JFileChooser jFileChooser = new JFileChooser();
 
             jFileChooser.setAcceptAllFileFilterUsed(false);
@@ -99,7 +101,7 @@ public class ApplicationController {
     }
 
     public void openFirmaFile() {
-        this.mainFrame.getLoadFirma().addActionListener(e->{
+        this.mainFrame.getLoadFirma().addActionListener(e -> {
             JFileChooser jFileChooser = new JFileChooser();
 
             jFileChooser.setAcceptAllFileFilterUsed(false);

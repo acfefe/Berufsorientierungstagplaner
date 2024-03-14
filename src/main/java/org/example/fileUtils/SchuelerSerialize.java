@@ -17,7 +17,7 @@ public class SchuelerSerialize {
     public static List<Schueler> readExcelIntoList(Path path) throws IOException {
         File fileTest = path.toFile();
         if (!fileTest.exists()) {
-            return List.of();
+            return new ArrayList<>();
         }
         List<Schueler> schuelerList = new ArrayList<>();
 
