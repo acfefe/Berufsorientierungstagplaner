@@ -3,8 +3,6 @@ package org.example.gui;
 import lombok.Data;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.nio.file.Path;
 
 @Data
 public class MainFrame extends JFrame {
@@ -17,6 +15,8 @@ public class MainFrame extends JFrame {
     private final JMenuItem loadSchueler = new JMenuItem("Schüler");
     private final JMenuItem loadFirma = new JMenuItem("Firma");
     private final JMenuItem viewRaum = new JMenuItem("Raum");
+
+    private final JButton startBtn = new JButton("Start Algorithm");
 
     public MainFrame(SchuelerPanel schuelerPanel, FirmaPanel firmaPanel, RaumPanel raumPanel) {
         this.schuelerPanel = schuelerPanel;
@@ -53,6 +53,11 @@ public class MainFrame extends JFrame {
         viewMenu.add(this.viewSchueler);
         viewMenu.add(this.viewFirma);
         viewMenu.add(this.viewRaum);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(this.startBtn);
+
+        this.setContentPane(buttonPanel);
 
         this.setVisible(true);
     }

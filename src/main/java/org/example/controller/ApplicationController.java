@@ -11,7 +11,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.jar.JarFile;
 
 @Data
 public class ApplicationController {
@@ -35,6 +34,7 @@ public class ApplicationController {
         this.raumController.loadRaum();
         openSchuelerFile();
         openFirmaFile();
+        startAlgorithm();
     }
 
     public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
@@ -68,6 +68,9 @@ public class ApplicationController {
                             zeitslots[j] = new Zeitslot(firma, raum, new ArrayList<>());
                             i++;
                         }
+                        i += 5 - raum.getZeitslots().size();
+                        zeitslots.addAll(0, raum.getZeitslots());
+                        raum.setZeitslots(zeitslots);
                     }
                 }
             }
@@ -108,6 +111,12 @@ public class ApplicationController {
 
             if (opt == JFileChooser.APPROVE_OPTION)
                 this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
+        });
+    }
+
+    public void startAlgorithm() {
+        this.mainFrame.getStartBtn().addActionListener(e -> {
+            this.assignRooms();
         });
     }
 }
