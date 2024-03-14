@@ -8,7 +8,7 @@ import java.util.List;
 public class Raum {
 
     private String name;
-    private List<Zeitslot> zeitslots;
+    private Zeitslot[] zeitslots = new Zeitslot[5];
 
     public Raum(String name) {
         this.name = name;

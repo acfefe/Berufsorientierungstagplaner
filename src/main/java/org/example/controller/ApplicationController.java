@@ -52,7 +52,7 @@ public class ApplicationController {
     }
 
     public void assignRooms() {
-
+        List<Raum> raumListe = raumController.getRaumList().getRaumList();
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlVeranstaltungen = (int) Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
             firma.setAnzahlVeranstaltung(anzahlVeranstaltungen);
@@ -60,21 +60,19 @@ public class ApplicationController {
         Collections.sort(firmaController.getFirmaList().getFirmen(), Comparator.comparingInt(Firma::getAnzahlVeranstaltung));
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             for(int i = 0;i < firma.getAnzahlVeranstaltung();) {
-                List<Raum> raumListe = raumController.getRaumList().getRaumList();
                 for (Raum raum:
                      raumListe) {
-                    if(raum.getZeitslots().size() < 5) {
-                        List<Zeitslot> zeitslots = new ArrayList<>();
-                        for(int j = i;j < 5 - raum.getZeitslots().size(); j++) {
-                            zeitslots.add(new Zeitslot(firma, raum, new ArrayList<>()));
+                    Zeitslot[] zeitslots = raum.getZeitslots();
+                    for (int j = 0;j < zeitslots.length;j++) {
+                        if(zeitslots[j] == null) {
+                            zeitslots[j] = new Zeitslot(firma, raum, new ArrayList<>());
+                            i++;
                         }
-                        i += 5 - raum.getZeitslots().size();
-                        zeitslots.addAll(0, raum.getZeitslots());
-                        raum.setZeitslots(zeitslots);
                     }
                 }
             }
         }
+        raumController.getRaumList().setRaumList(raumListe);
     }
 
     public void openSchuelerFile() {
