@@ -68,8 +68,6 @@ public class ApplicationController {
                             zeitslots[j] = new Zeitslot(firma, raum, new ArrayList<>());
                             i++;
                         }
-                        i += 5 - raum.getZeitslots().size();
-                        zeitslots.addAll(0, raum.getZeitslots());
                         raum.setZeitslots(zeitslots);
                     }
                 }
