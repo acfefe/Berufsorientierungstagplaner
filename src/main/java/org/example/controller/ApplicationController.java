@@ -37,7 +37,7 @@ public class ApplicationController {
         startAlgorithm();
     }
 
-    public void calculateWishNumber(SchuelerController schuelerController, FirmaController firmaController) {
+    public void calculateWishNumber() {
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlWuensche = 0;
             for (Schueler schueler : schuelerController.getSchuelerList().getSchueler()) {
@@ -54,10 +54,11 @@ public class ApplicationController {
     public void assignRooms() {
         List<Raum> raumListe = raumController.getRaumList().getRaumList();
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
-            int anzahlVeranstaltungen = (int) Math.ceil(firma.getAnzahlWuensche() / firma.getMaximaleAnzahlSchueler());
+            int anzahlVeranstaltungen = (int) Math.ceil((double)firma.getAnzahlWuensche() / (double)firma.getMaximaleAnzahlSchueler());
             firma.setAnzahlVeranstaltung(anzahlVeranstaltungen);
+            firma.setGebuchteZeitslots(new ArrayList<>());
         }
-        Collections.sort(firmaController.getFirmaList().getFirmen(), Comparator.comparingInt(Firma::getAnzahlVeranstaltung));
+        Collections.sort(firmaController.getFirmaList().getFirmen(), Comparator.comparingInt(Firma::getAnzahlVeranstaltung).reversed());
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             for(int i = 0;i < firma.getAnzahlVeranstaltung();) {
                 for (Raum raum:
@@ -65,7 +66,9 @@ public class ApplicationController {
                     Zeitslot[] zeitslots = raum.getZeitslots();
                     for (int j = 0;j < zeitslots.length;j++) {
                         if(zeitslots[j] == null) {
-                            zeitslots[j] = new Zeitslot(firma, raum, new ArrayList<>());
+                            Zeitslot zeitslot = new Zeitslot(firma, raum, new ArrayList<>());
+                            firma.getGebuchteZeitslots().add(zeitslot);
+                            zeitslots[j] = zeitslot;
                             i++;
                         }
                         raum.setZeitslots(zeitslots);
@@ -74,6 +77,7 @@ public class ApplicationController {
             }
         }
         raumController.getRaumList().setRaumList(raumListe);
+        System.out.println(raumListe);
     }
 
     public void openSchuelerFile() {
@@ -114,6 +118,7 @@ public class ApplicationController {
 
     public void startAlgorithm() {
         this.mainFrame.getStartBtn().addActionListener(e -> {
+            this.calculateWishNumber();
             this.assignRooms();
         });
     }
