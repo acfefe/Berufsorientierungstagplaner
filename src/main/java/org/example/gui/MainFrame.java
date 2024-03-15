@@ -10,11 +10,14 @@ public class MainFrame extends JFrame {
     private final FirmaPanel firmaPanel;
     private final RaumPanel raumPanel;
 
+    private final JPanel buttonPanel = new JPanel();
+
+    private final JMenuItem viewStart = new JMenuItem("Start");
     private final JMenuItem viewSchueler = new JMenuItem("Schüler");
     private final JMenuItem viewFirma = new JMenuItem("Firma");
+    private final JMenuItem viewRaum = new JMenuItem("Raum");
     private final JMenuItem loadSchueler = new JMenuItem("Schüler");
     private final JMenuItem loadFirma = new JMenuItem("Firma");
-    private final JMenuItem viewRaum = new JMenuItem("Raum");
 
     private final JButton startBtn = new JButton("Start Algorithm");
 
@@ -26,6 +29,7 @@ public class MainFrame extends JFrame {
         viewSchueler();
         viewFirma();
         viewRaum();
+        viewStart();
     }
 
     public void initialize() {
@@ -50,14 +54,15 @@ public class MainFrame extends JFrame {
         loadDataMenu.add(this.loadSchueler);
         loadDataMenu.add(this.loadFirma);
 
+        viewMenu.add(this.viewStart);
         viewMenu.add(this.viewSchueler);
         viewMenu.add(this.viewFirma);
         viewMenu.add(this.viewRaum);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(this.startBtn);
 
-        this.setContentPane(buttonPanel);
+        this.buttonPanel.add(this.startBtn);
+
+        this.setContentPane(this.buttonPanel);
 
         this.setVisible(true);
     }
@@ -81,6 +86,14 @@ public class MainFrame extends JFrame {
     public void viewRaum() {
         this.viewRaum.addActionListener(e -> {
             this.setContentPane(this.raumPanel);
+            this.revalidate();
+            this.repaint();
+        });
+    }
+
+    public void viewStart() {
+        this.viewStart.addActionListener(e -> {
+            this.setContentPane(this.buttonPanel);
             this.revalidate();
             this.repaint();
         });
