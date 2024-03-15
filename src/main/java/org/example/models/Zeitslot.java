@@ -10,7 +10,7 @@ import java.util.List;
 public class Zeitslot {
 
     private Firma firma;
-    private Raum raum;
+
     private List<Schueler> schuelerList;
 
 }

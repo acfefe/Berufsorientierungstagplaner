@@ -2,6 +2,7 @@ package org.example.models;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,6 +13,6 @@ public class Firma {
     private int anzahlWuensche;
     private List<Zeitslot> verfuegbareZeiten;
     private int maximaleAnzahlSchueler;
-    private List<Zeitslot> gebuchteZeitslots;
+    private ArrayList<String> gebuchteZeitslots;
     private int anzahlVeranstaltung;
 }

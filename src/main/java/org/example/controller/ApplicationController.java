@@ -63,13 +63,16 @@ public class ApplicationController {
         }
         firmaController.getFirmaList().getFirmen().sort(Comparator.comparingInt(Firma::getAnzahlVeranstaltung).reversed());
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
+
             for (int i = 0; i < firma.getAnzahlVeranstaltung(); ) {
                 for (Raum raum : raumListe) {
                     Zeitslot[] zeitslots = raum.getZeitslots();
                     for (int j = 0; j < zeitslots.length; j++) {
                         if (zeitslots[j] == null) {
-                            Zeitslot zeitslot = new Zeitslot(firma, raum, new ArrayList<>());
-                            firma.getGebuchteZeitslots().add(zeitslot);
+                            Zeitslot zeitslot = new Zeitslot(firma, new ArrayList<>());
+                            ArrayList<String> gebuchteZeitslots = firma.getGebuchteZeitslots();
+                            gebuchteZeitslots.add(zeitslot.toString());
+                            firma.setGebuchteZeitslots(gebuchteZeitslots);
                             zeitslots[j] = zeitslot;
                             i++;
                         }
