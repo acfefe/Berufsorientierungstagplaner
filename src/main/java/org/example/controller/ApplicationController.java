@@ -9,11 +9,12 @@ import org.example.models.Zeitslot;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Data
 public class ApplicationController {
@@ -24,19 +25,19 @@ public class ApplicationController {
     private final RaumController raumController;
     private final MainFrame mainFrame;
     private Path firmaPath;
+    private Path raumPath;
     private Path schuelerPath;
+    private Properties appProp = new Properties();
 
-    public ApplicationController(FirmaController firmaController, SchuelerController schuelerController, ZeitslotController zeitslotController, RaumController raumController, MainFrame mainFrame) {
+    public ApplicationController(FirmaController firmaController, SchuelerController schuelerController, ZeitslotController zeitslotController, RaumController raumController, MainFrame mainFrame) throws IOException {
         this.firmaController = firmaController;
         this.schuelerController = schuelerController;
         this.zeitslotController = zeitslotController;
         this.raumController = raumController;
         this.mainFrame = mainFrame;
-        this.schuelerController.loadSchueler();
-        this.firmaController.loadFirma();
-        this.raumController.loadRaum();
         openSchuelerFile();
         openFirmaFile();
+        openRaumFile();
         startAlgorithm();
     }
 
@@ -98,8 +99,24 @@ public class ApplicationController {
 
             int opt = jFileChooser.showOpenDialog(null);
 
-            if (opt == JFileChooser.APPROVE_OPTION)
+            if (opt == JFileChooser.APPROVE_OPTION) {
                 this.schuelerPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
+
+                try {
+                    FileInputStream fileIn = new FileInputStream("config/application.properties");
+                    FileOutputStream fileOut = new FileOutputStream("config/application.properties");
+                    appProp.load(fileIn);
+                    appProp.setProperty("app.schueler.datei", String.valueOf(this.schuelerPath));
+                    appProp.store(fileOut, null);
+                    fileIn.close();
+                    fileOut.close();
+                    this.schuelerController.loadSchueler();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+
         });
     }
 
@@ -116,8 +133,54 @@ public class ApplicationController {
 
             int opt = jFileChooser.showOpenDialog(null);
 
-            if (opt == JFileChooser.APPROVE_OPTION)
+            if (opt == JFileChooser.APPROVE_OPTION) {
                 this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
+
+                try {
+                    FileInputStream fileIn = new FileInputStream("config/application.properties");
+                    FileOutputStream fileOut = new FileOutputStream("config/application.properties");
+                    appProp.load(fileIn);
+                    appProp.setProperty("app.veranstaltungs.datei", String.valueOf(this.firmaPath));
+                    appProp.store(fileOut, null);
+                    fileIn.close();
+                    fileOut.close();
+                    this.firmaController.loadFirma();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+    }
+
+    public void openRaumFile() {
+        this.mainFrame.getLoadRaum().addActionListener(e -> {
+            JFileChooser jFileChooser = new JFileChooser();
+
+            jFileChooser.setAcceptAllFileFilterUsed(false);
+
+            jFileChooser.setDialogTitle("Wähle die Firmen-Excel-Liste aus");
+
+            FileNameExtensionFilter restrict = new FileNameExtensionFilter(".xlsx", "xlsx");
+            jFileChooser.addChoosableFileFilter(restrict);
+
+            int opt = jFileChooser.showOpenDialog(null);
+
+            if (opt == JFileChooser.APPROVE_OPTION) {
+                this.raumPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
+
+                try {
+                    FileInputStream fileIn = new FileInputStream("config/application.properties");
+                    FileOutputStream fileOut = new FileOutputStream("config/application.properties");
+                    appProp.load(fileIn);
+                    appProp.setProperty("app.raum.datei", String.valueOf(this.raumPath));
+                    appProp.store(fileOut, null);
+                    fileIn.close();
+                    fileOut.close();
+                    this.raumController.loadRaum();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
         });
     }
 

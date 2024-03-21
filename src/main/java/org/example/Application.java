@@ -23,19 +23,14 @@ public class Application {
         Properties appProp = new Properties();
         appProp.load(new FileInputStream("config/application.properties"));
 
-
         FlatDarkLaf.setup();
 
         List<Firma> firmen = FirmaSerialize.readExcelIntoList(Path.of(appProp.getProperty("app.veranstaltungs.datei")));
-//        List<Firma> firmen = FirmaSerialize.readExcelIntoList(Path.of("/home/justin/Repos/Berufsorientierungstagplaner/src/main/resources/IMPORT BOT1_Veranstaltungsliste.xlsx"));
-//        List<Firma> firmen = FirmaSerialize.readExcelIntoList(Path.of("H:\\IdeaProjects\\Projekt\\src\\main\\resources\\IMPORT BOT1_Veranstaltungsliste.xlsx"));
         FirmaList firmaList = new FirmaList(firmen);
         FirmaPanel firmaPanel = new FirmaPanel();
         FirmaController firmaController = new FirmaController(firmaList, firmaPanel);
 
         List<Schueler> schueler = SchuelerSerialize.readExcelIntoList(Path.of(appProp.getProperty("app.schueler.datei")));
-//        List<Schueler> schueler = SchuelerSerialize.readExcelIntoList(Path.of("/home/justin/Repos/Berufsorientierungstagplaner/src/main/resources/IMPORT BOT2_Wahl.xlsx"));
-//        List<Schueler> schueler = SchuelerSerialize.readExcelIntoList(Path.of("H:\\IdeaProjects\\Projekt\\src\\main\\resources\\IMPORT BOT2_Wahl.xlsx"));
         SchuelerList schuelerList = new SchuelerList(schueler);
         SchuelerPanel schuelerPanel = new SchuelerPanel();
         SchuelerController schuelerController = new SchuelerController(schuelerList, schuelerPanel);
@@ -43,8 +38,6 @@ public class Application {
         ZeitslotController zeitslotController = new ZeitslotController();
 
         List<Raum> raeume = RaumSerialize.readExcelIntoList(Path.of(appProp.getProperty("app.raum.datei")));
-//        List<Raum> raeume = RaumSerialize.readExcelIntoList(Path.of("/home/justin/Repos/Berufsorientierungstagplaner/src/main/resources/IMPORT BOT0_Raumliste.xlsx"));
-//        List<Raum> raeume = RaumSerialize.readExcelIntoList(Path.of("H:\\IdeaProjects\\Projekt\\src\\main\\resources\\IMPORT BOT0_Raumliste.xlsx"));
         RaumList raumList = new RaumList(raeume);
         RaumPanel raumPanel = new RaumPanel();
         RaumController raumController = new RaumController(raumList, raumPanel);

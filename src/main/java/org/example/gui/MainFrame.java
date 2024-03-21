@@ -18,6 +18,8 @@ public class MainFrame extends JFrame {
     private final JMenuItem viewRaum = new JMenuItem("Raum");
     private final JMenuItem loadSchueler = new JMenuItem("Schüler");
     private final JMenuItem loadFirma = new JMenuItem("Firma");
+    private final JMenuItem loadRaum = new JMenuItem("Raum");
+
 
     private final JButton startBtn = new JButton("Start Algorithm");
 
@@ -53,6 +55,7 @@ public class MainFrame extends JFrame {
         fileMenu.add(loadDataMenu);
         loadDataMenu.add(this.loadSchueler);
         loadDataMenu.add(this.loadFirma);
+        loadDataMenu.add(this.loadRaum);
 
         viewMenu.add(this.viewStart);
         viewMenu.add(this.viewSchueler);
