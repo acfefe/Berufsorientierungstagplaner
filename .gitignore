@@ -4,7 +4,7 @@ target/
 !**/src/test/**/target/
 
 ### Exclude config files ###
-### config/
+ config/
 
 ### Exclude Excel Files ###
 *.xlsx
