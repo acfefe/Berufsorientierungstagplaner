@@ -1,6 +1,13 @@
 package org.example;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import org.example.controller.ApplicationController;
+import org.example.controller.FirmaController;
+import org.example.controller.SchuelerController;
+import org.example.controller.ZeitslotController;
+import org.example.controller.*;
 import org.example.controller.*;
 import org.example.fileUtils.FirmaSerialize;
 import org.example.fileUtils.RaumSerialize;
@@ -11,6 +18,7 @@ import org.example.gui.RaumPanel;
 import org.example.gui.SchuelerPanel;
 import org.example.models.*;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
