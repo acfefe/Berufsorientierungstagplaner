@@ -34,6 +34,10 @@ public class MainFrame extends JFrame {
         viewStart();
     }
 
+    /**
+     * Baut die GUI auf
+     * @Author Justin
+     */
     public void initialize() {
         this.setTitle("Berufsorientierungstagplaner");
         this.setSize(400, 500);
@@ -70,6 +74,10 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Wechselt auf Knopfdruck das ContentPane auf das SchülerPanel
+     * @Author Justin
+     */
     public void viewSchueler() {
         this.viewSchueler.addActionListener(e -> {
             this.setContentPane(this.schuelerPanel);
@@ -78,6 +86,10 @@ public class MainFrame extends JFrame {
         });
     }
 
+    /**
+     * Wechselt auf Knopfdruck das ContentPane auf das FirmaPanel
+     * @Author Justin
+     */
     public void viewFirma() {
         this.viewFirma.addActionListener(e -> {
             this.setContentPane(this.firmaPanel);
@@ -86,6 +98,10 @@ public class MainFrame extends JFrame {
         });
     }
 
+    /**
+     * Wechselt auf Knopfdruck das ContentPane auf das RaumPanel
+     * @Author Justin
+     */
     public void viewRaum() {
         this.viewRaum.addActionListener(e -> {
             this.setContentPane(this.raumPanel);
@@ -94,6 +110,10 @@ public class MainFrame extends JFrame {
         });
     }
 
+    /**
+     * Wechselt auf Knopfdruck das ContentPane auf das ursprüngliche Panel
+     * @Author Justin
+     */
     public void viewStart() {
         this.viewStart.addActionListener(e -> {
             this.setContentPane(this.buttonPanel);

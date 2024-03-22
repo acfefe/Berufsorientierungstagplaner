@@ -22,6 +22,10 @@ public class RaumPanel extends JPanel {
         initialize();
     }
 
+    /**
+     * Baut die GUI auf
+     * @Author Justin
+     */
     private void initialize() {
         this.setLayout(new BorderLayout());
         this.add(this.raumTableScrollPane, BorderLayout.CENTER);

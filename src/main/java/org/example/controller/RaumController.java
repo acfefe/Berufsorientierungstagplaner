@@ -15,6 +15,10 @@ public class RaumController {
         this.raumPanel = raumPanel;
     }
 
+    /**
+     * Updated das TableModel
+     * @Author Justin
+     */
     public void loadRaum() {
         this.raumList.getRaumList().forEach(row -> {
             this.raumPanel.getRaumTableModel().addRow(new Object[]{

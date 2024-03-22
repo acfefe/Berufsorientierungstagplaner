@@ -22,6 +22,10 @@ public class SchuelerPanel extends JPanel {
         initialize();
     }
 
+    /**
+     * Baut die GUI auf
+     * @Author Justin
+     */
     public void initialize() {
         this.setLayout(new BorderLayout());
         this.add(this.schuelerTableScrollPane, BorderLayout.CENTER);

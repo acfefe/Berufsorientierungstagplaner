@@ -17,6 +17,10 @@ public class SchuelerController {
         this.schuelerPanel = schuelerPanel;
     }
 
+    /**
+     * Updated das TableModel
+     * @Author Justin
+     */
     public void loadSchueler() {
         this.schuelerList.getSchueler().forEach(row -> {
             this.schuelerPanel.getSchuelerTableModel().addRow(new Object[]{

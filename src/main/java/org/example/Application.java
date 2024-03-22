@@ -54,5 +54,6 @@ public class Application {
         MainFrame mainFrame = new MainFrame(schuelerPanel, firmaPanel, raumPanel);
 
         ApplicationController applicationController = new ApplicationController(firmaController, schuelerController, zeitslotController, raumController, mainFrame);
+        System.out.println(Path.of(appProp.getProperty("app.veranstaltungs.datei")));
     }
 }

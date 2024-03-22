@@ -15,6 +15,10 @@ public class FirmaController {
         this.firmaPanel = firmaPanel;
     }
 
+    /**
+     * Updated das TableModel
+     * @Author Justin
+     */
     public void loadFirma() {
         this.firmaList.getFirmen().forEach(row -> {
             this.firmaPanel.getFirmaTableModel().addRow(new Object[]{

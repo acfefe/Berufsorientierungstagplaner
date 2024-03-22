@@ -14,6 +14,13 @@ import java.util.List;
 
 public class SchuelerSerialize {
 
+    /**
+     * Liest Excel Dateien in eine Liste ein
+     * @param path Ein Pfad zur einzulesenden Liste
+     * @return Eine Liste vom Typ Schüler um diese einzulesen
+     * @throws IOException
+     * @Author Justin
+     */
     public static List<Schueler> readExcelIntoList(Path path) throws IOException {
         File fileTest = path.toFile();
         if (!fileTest.exists()) {

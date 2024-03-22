@@ -41,7 +41,10 @@ public class ApplicationController {
         startAlgorithm();
     }
 
-
+    /**
+     * Errechnet die Schüler zusammen mit der Anzahl an gewünschter Schüler der Firma
+     * @Author Felix
+     */
     public void calculateWishNumber() {
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlWuensche = 0;
@@ -58,6 +61,10 @@ public class ApplicationController {
         }
     }
 
+    /**
+     * Ein Teil des Algorithmus, der Firmen zu räumen zu teilt
+     * @Author Felix
+     */
     public void assignRooms() {
         List<Raum> raumListe = raumController.getRaumList().getRaumList();
         List<Firma> firmen = firmaController.getFirmaList().getFirmen();
@@ -89,7 +96,10 @@ public class ApplicationController {
         System.out.println(raumListe);
     }
 
-
+    /**
+     * Öffnet einen FileChooser um die Schülerliste einzulesen
+     * @Author Finn & Justin
+     */
     public void openSchuelerFile() {
         this.mainFrame.getLoadSchueler().addActionListener(e -> {
             JFileChooser jFileChooser = new JFileChooser();
@@ -123,6 +133,10 @@ public class ApplicationController {
         });
     }
 
+    /**
+     * Öffnet einen FileChooser um die Firmenliste einzulesen
+     * @Author Finn & Justin
+     */
     public void openFirmaFile() {
         this.mainFrame.getLoadFirma().addActionListener(e -> {
             JFileChooser jFileChooser = new JFileChooser();
@@ -153,6 +167,10 @@ public class ApplicationController {
         });
     }
 
+    /**
+     * Öffnet ein FileChooser um die RaumDatei einzulesen
+     * @Author Finn & Justin
+     */
     public void openRaumFile() {
         this.mainFrame.getLoadRaum().addActionListener(e -> {
             JFileChooser jFileChooser = new JFileChooser();
@@ -182,6 +200,10 @@ public class ApplicationController {
         });
     }
 
+    /**
+     * Startet den Algorithmus auf Knopfdruck
+     * @Author Justin
+     */
     public void startAlgorithm() {
         this.mainFrame.getStartBtn().addActionListener(e -> {
             this.calculateWishNumber();
