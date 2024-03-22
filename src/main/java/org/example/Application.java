@@ -29,7 +29,7 @@ import java.util.Properties;
 public class Application {
     public static void main(String[] args) throws IOException {
         Properties appProp = new Properties();
-        appProp.load(new FileInputStream("config/application.properties"));
+        appProp.load(new FileInputStream("src\\main\\resources\\application.properties"));
 
         FlatDarkLaf.setup();
 

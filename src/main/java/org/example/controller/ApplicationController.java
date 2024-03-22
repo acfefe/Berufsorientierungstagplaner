@@ -121,9 +121,9 @@ public class ApplicationController {
 
                 try {
 
-                    appProp.load(new FileInputStream("config/application.properties"));
+                    appProp.load(new FileInputStream("src\\main\\resources\\src\\main\\resources\\application.properties"));
                     appProp.setProperty("app.schueler.datei", String.valueOf(this.schuelerPath));
-                    appProp.store(new FileOutputStream("config/application.properties"), null);
+                    appProp.store(new FileOutputStream("src\\main\\resources\\application.properties"), null);
 
                     this.schuelerController.getSchuelerList().setSchueler(SchuelerSerialize.readExcelIntoList(this.schuelerPath));
                     this.schuelerController.loadSchueler();
@@ -157,9 +157,9 @@ public class ApplicationController {
                 this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
 
                 try {
-                    appProp.load(new FileInputStream("config/application.properties"));
+                    appProp.load(new FileInputStream("src\\main\\resources\\application.properties"));
                     appProp.setProperty("app.veranstaltungs.datei", String.valueOf(this.firmaPath));
-                    appProp.store(new FileOutputStream("config/application.properties"), null);
+                    appProp.store(new FileOutputStream("src\\main\\resources\\application.properties"), null);
 
                     this.firmaController.getFirmaList().setFirmen(FirmaSerialize.readExcelIntoList(this.firmaPath));
                     this.firmaController.loadFirma();
@@ -191,9 +191,9 @@ public class ApplicationController {
                 this.raumPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
 
                 try {
-                    appProp.load(new FileInputStream("config/application.properties"));
+                    appProp.load(new FileInputStream("src\\main\\resources\\application.properties"));
                     appProp.setProperty("app.raum.datei", String.valueOf(this.raumPath));
-                    appProp.store(new FileOutputStream("config/application.properties"), null);
+                    appProp.store(new FileOutputStream("src\\main\\resources\\application.properties"), null);
                     this.raumController.getRaumList().setRaumList(RaumSerialize.readExcelIntoList(this.raumPath));
                     this.raumController.loadRaum();
                 } catch (IOException ex) {
