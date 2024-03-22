@@ -35,6 +35,9 @@ public class ApplicationController {
         this.zeitslotController = zeitslotController;
         this.raumController = raumController;
         this.mainFrame = mainFrame;
+        this.schuelerController.loadSchueler();
+        this.firmaController.loadFirma();
+        this.raumController.loadRaum();
         openSchuelerFile();
         openFirmaFile();
         openRaumFile();
