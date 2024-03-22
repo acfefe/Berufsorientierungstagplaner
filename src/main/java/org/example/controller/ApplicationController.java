@@ -1,6 +1,9 @@
 package org.example.controller;
 
 import lombok.Data;
+import org.example.fileUtils.FirmaSerialize;
+import org.example.fileUtils.RaumSerialize;
+import org.example.fileUtils.SchuelerSerialize;
 import org.example.gui.MainFrame;
 import org.example.models.Firma;
 import org.example.models.Raum;
@@ -9,10 +12,7 @@ import org.example.models.Zeitslot;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -110,6 +110,7 @@ public class ApplicationController {
                     appProp.store(fileOut, null);
                     fileIn.close();
                     fileOut.close();
+                    this.schuelerController.getSchuelerList().setSchueler(SchuelerSerialize.readExcelIntoList(this.schuelerPath));
                     this.schuelerController.loadSchueler();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -144,6 +145,7 @@ public class ApplicationController {
                     appProp.store(fileOut, null);
                     fileIn.close();
                     fileOut.close();
+                    this.firmaController.getFirmaList().setFirmen(FirmaSerialize.readExcelIntoList(this.firmaPath));
                     this.firmaController.loadFirma();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -176,6 +178,7 @@ public class ApplicationController {
                     appProp.store(fileOut, null);
                     fileIn.close();
                     fileOut.close();
+                    this.raumController.getRaumList().setRaumList(RaumSerialize.readExcelIntoList(this.raumPath));
                     this.raumController.loadRaum();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
