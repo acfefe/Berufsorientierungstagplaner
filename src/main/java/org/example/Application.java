@@ -1,13 +1,7 @@
 package org.example;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import org.example.controller.ApplicationController;
-import org.example.controller.FirmaController;
-import org.example.controller.SchuelerController;
-import org.example.controller.ZeitslotController;
-import org.example.controller.*;
+
 import org.example.controller.*;
 import org.example.fileUtils.FirmaSerialize;
 import org.example.fileUtils.RaumSerialize;
@@ -18,8 +12,6 @@ import org.example.gui.RaumPanel;
 import org.example.gui.SchuelerPanel;
 import org.example.models.*;
 
-import javax.swing.*;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -29,7 +21,15 @@ import java.util.Properties;
 public class Application {
     public static void main(String[] args) throws IOException {
         Properties appProp = new Properties();
-        appProp.load(new FileInputStream("src\\main\\resources\\application.properties"));
+        ClassLoader classLoader = Application.class.getClassLoader();
+        appProp.load(classLoader.getResourceAsStream("application.properties"));
+        
+        // Replace placeholders in property file
+        for (String key : appProp.stringPropertyNames()) {
+            String value = appProp.getProperty(key);
+            value = value.replace("${user.dir}", System.getProperty("user.dir"));
+            appProp.setProperty(key, value);
+        }
 
         FlatDarkLaf.setup();
 
@@ -50,13 +50,8 @@ public class Application {
         RaumPanel raumPanel = new RaumPanel();
         RaumController raumController = new RaumController(raumList, raumPanel);
 
-
         MainFrame mainFrame = new MainFrame(schuelerPanel, firmaPanel, raumPanel);
 
         ApplicationController applicationController = new ApplicationController(firmaController, schuelerController, zeitslotController, raumController, mainFrame);
-        System.out.println(Path.of(appProp.getProperty("app.veranstaltungs.datei")));
-        System.out.println(raeume);
-        System.out.println(firmen);
-        System.out.println(schueler);
     }
 }
