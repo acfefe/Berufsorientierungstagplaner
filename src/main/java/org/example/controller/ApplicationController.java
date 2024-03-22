@@ -41,14 +41,111 @@ public class ApplicationController {
         startAlgorithm();
     }
 
+    /*
+    public double calcMaxScore() {
+        double maxScore = 0;
+        int test = 0;
+        for (Schueler student : schuelerController.getSchuelerList().getSchueler()) {
+            test++;
+            for (int wish : student.getWahlen()) {
+                int counter = wish.getPrio();
+                if (counter == 1) {
+                    if (wish.getCompID() != -1) {
+                        maxScore += 6;
+                    } else {
+                        maxScore += 0;
+                    }
+                } else if (counter == 2) {
+                    if (wish.getCompID() != -1) {
+                        maxScore += 5;
+                    } else {
+                        maxScore += 0;
+                    }
+                } else if (counter == 3) {
+                    if (wish.getCompID() != -1) {
+                        maxScore += 4;
+                    } else {
+                        maxScore += 0;
+                    }
+                } else if (counter == 4) {
+                    if (wish.getCompID() != -1) {
+                        maxScore += 3;
+                    } else {
+                        maxScore += 0;
+                    }
+                } else if (counter == 5) {
+                    if (wish.getCompID() != -1) {
+                        maxScore += 2;
+                    } else {
+                        maxScore += 0;
+                    }
+                }
+            }
+        }
+        return maxScore;
+    }
+
+
+    public double calcScore() {
+        double maxScore = calcMaxScore();
+        double realScore = 0;
+        for (Schueler student : schuelerController.getSchuelerList().getSchueler()) {
+            for (int wish : student.getWahlen()) {
+                for (Event toGoEvent : student.toGolist) {
+                    int wishId = wish.getCompID();
+                    if (wishId == toGoEvent.eventid) {
+                        int counter = wish.getPrio();
+                        if (counter == 1) {
+                            if (wish.getCompID() != -1) {
+                                realScore += 6;
+                            } else {
+                                realScore += 0;
+                            }
+                        } else if (counter == 2) {
+                            if (wish.getCompID() != -1) {
+                                realScore += 5;
+                            } else {
+                                realScore += 0;
+                            }
+                        } else if (counter == 3) {
+                            if (wish.getCompID() != -1) {
+                                realScore += 4;
+                            } else {
+                                realScore += 0;
+                            }
+                        } else if (counter == 4) {
+                            if (wish.getCompID() != -1) {
+                                realScore += 3;
+                            } else {
+                                realScore += 0;
+                            }
+                        } else {
+                            if (wish.getCompID() != -1) {
+                                realScore += 2;
+                            } else {
+                                realScore += 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(realScore);
+        System.out.println(maxScore);
+        return (realScore / maxScore) * 100;
+    }
+
+    */
     public void calculateWishNumber() {
         for (Firma firma : firmaController.getFirmaList().getFirmen()) {
             int anzahlWuensche = 0;
             for (Schueler schueler : schuelerController.getSchuelerList().getSchueler()) {
-                if (Arrays.stream(schueler.getWahlen())
-                        .anyMatch(whl ->
-                                whl == firma.getFirmenID())) {
-                    anzahlWuensche++;
+                int[] wahlen = schueler.getWahlen();
+                for (int whl : wahlen) {
+                    if (whl == firma.getFirmenID()) {
+                        anzahlWuensche++;
+                        break; // No need to continue iteration once the condition is met
+                    }
                 }
             }
             firma.setAnzahlWuensche(anzahlWuensche);
@@ -57,34 +154,35 @@ public class ApplicationController {
 
     public void assignRooms() {
         List<Raum> raumListe = raumController.getRaumList().getRaumList();
-        for (Firma firma : firmaController.getFirmaList().getFirmen()) {
+        List<Firma> firmen = firmaController.getFirmaList().getFirmen();
+
+        for (Firma firma : firmen) {
             int anzahlVeranstaltungen = (int) Math.ceil((double) firma.getAnzahlWuensche() / (double) firma.getMaximaleAnzahlSchueler());
             firma.setAnzahlVeranstaltung(anzahlVeranstaltungen);
             firma.setGebuchteZeitslots(new ArrayList<>());
         }
-        firmaController.getFirmaList().getFirmen().sort(Comparator.comparingInt(Firma::getAnzahlVeranstaltung).reversed());
-        for (Firma firma : firmaController.getFirmaList().getFirmen()) {
 
-            for (int i = 0; i < firma.getAnzahlVeranstaltung(); ) {
-                for (Raum raum : raumListe) {
-                    Zeitslot[] zeitslots = raum.getZeitslots();
-                    for (int j = 0; j < zeitslots.length; j++) {
-                        if (zeitslots[j] == null) {
-                            Zeitslot zeitslot = new Zeitslot(firma, new ArrayList<>());
-                            ArrayList<String> gebuchteZeitslots = firma.getGebuchteZeitslots();
-                            gebuchteZeitslots.add(zeitslot.toString());
-                            firma.setGebuchteZeitslots(gebuchteZeitslots);
-                            zeitslots[j] = zeitslot;
-                            i++;
-                        }
-                        raum.setZeitslots(zeitslots);
+        firmen.sort(Comparator.comparingInt(Firma::getAnzahlVeranstaltung).reversed());
+
+        for (Firma firma : firmen) {
+            List<String> gebuchteZeitslots = firma.getGebuchteZeitslots();
+            for (Raum raum : raumListe) {
+                Zeitslot[] zeitslots = raum.getZeitslots();
+                for (int j = 0; j < zeitslots.length && firma.getAnzahlVeranstaltung() > 0; j++) {
+                    if (zeitslots[j] == null) {
+                        Zeitslot zeitslot = new Zeitslot(firma, gebuchteZeitslots);
+                        gebuchteZeitslots.add(zeitslot.toString());
+                        zeitslots[j] = zeitslot;
+                        firma.setAnzahlVeranstaltung(firma.getAnzahlVeranstaltung() - 1);
                     }
                 }
+                raum.setZeitslots(zeitslots);
             }
         }
         raumController.getRaumList().setRaumList(raumListe);
         System.out.println(raumListe);
     }
+
 
     public void openSchuelerFile() {
         this.mainFrame.getLoadSchueler().addActionListener(e -> {
@@ -103,13 +201,10 @@ public class ApplicationController {
                 this.schuelerPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
 
                 try {
-                    FileInputStream fileIn = new FileInputStream("config/application.properties");
-                    FileOutputStream fileOut = new FileOutputStream("config/application.properties");
-                    appProp.load(fileIn);
+
+                    appProp.load(new FileInputStream("config/application.properties"));
                     appProp.setProperty("app.schueler.datei", String.valueOf(this.schuelerPath));
-                    appProp.store(fileOut, null);
-                    fileIn.close();
-                    fileOut.close();
+                    appProp.store(new FileOutputStream("config/application.properties"), null);
                     this.schuelerController.loadSchueler();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -137,13 +232,10 @@ public class ApplicationController {
                 this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
 
                 try {
-                    FileInputStream fileIn = new FileInputStream("config/application.properties");
-                    FileOutputStream fileOut = new FileOutputStream("config/application.properties");
-                    appProp.load(fileIn);
+                    appProp.load(new FileInputStream("config/application.properties"));
                     appProp.setProperty("app.veranstaltungs.datei", String.valueOf(this.firmaPath));
-                    appProp.store(fileOut, null);
-                    fileIn.close();
-                    fileOut.close();
+                    appProp.store(new FileOutputStream("config/application.properties"), null);
+
                     this.firmaController.loadFirma();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -158,7 +250,7 @@ public class ApplicationController {
 
             jFileChooser.setAcceptAllFileFilterUsed(false);
 
-            jFileChooser.setDialogTitle("Wähle die Firmen-Excel-Liste aus");
+            jFileChooser.setDialogTitle("Wähle die Raum-Excel-Liste aus");
 
             FileNameExtensionFilter restrict = new FileNameExtensionFilter(".xlsx", "xlsx");
             jFileChooser.addChoosableFileFilter(restrict);
@@ -169,13 +261,10 @@ public class ApplicationController {
                 this.raumPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
 
                 try {
-                    FileInputStream fileIn = new FileInputStream("config/application.properties");
-                    FileOutputStream fileOut = new FileOutputStream("config/application.properties");
-                    appProp.load(fileIn);
+                    appProp.load(new FileInputStream("config/application.properties"));
                     appProp.setProperty("app.raum.datei", String.valueOf(this.raumPath));
-                    appProp.store(fileOut, null);
-                    fileIn.close();
-                    fileOut.close();
+                    appProp.store(new FileOutputStream("config/application.properties"), null);
+
                     this.raumController.loadRaum();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);

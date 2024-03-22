@@ -11,6 +11,6 @@ public class Zeitslot {
 
     private Firma firma;
 
-    private List<Schueler> schuelerList;
+    private List<String> schuelerList;
 
 }
