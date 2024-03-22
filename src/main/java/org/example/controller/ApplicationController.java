@@ -204,14 +204,9 @@ public class ApplicationController {
 
                     appProp.load(new FileInputStream("config/application.properties"));
                     appProp.setProperty("app.schueler.datei", String.valueOf(this.schuelerPath));
-<<<<<<< HEAD
                     appProp.store(new FileOutputStream("config/application.properties"), null);
-=======
-                    appProp.store(fileOut, null);
-                    fileIn.close();
-                    fileOut.close();
+
                     this.schuelerController.getSchuelerList().setSchueler(SchuelerSerialize.readExcelIntoList(this.schuelerPath));
->>>>>>> baf2447c480d8d018ed8b4e4901db0246aa05f31
                     this.schuelerController.loadSchueler();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -241,15 +236,9 @@ public class ApplicationController {
                 try {
                     appProp.load(new FileInputStream("config/application.properties"));
                     appProp.setProperty("app.veranstaltungs.datei", String.valueOf(this.firmaPath));
-<<<<<<< HEAD
                     appProp.store(new FileOutputStream("config/application.properties"), null);
 
-=======
-                    appProp.store(fileOut, null);
-                    fileIn.close();
-                    fileOut.close();
                     this.firmaController.getFirmaList().setFirmen(FirmaSerialize.readExcelIntoList(this.firmaPath));
->>>>>>> baf2447c480d8d018ed8b4e4901db0246aa05f31
                     this.firmaController.loadFirma();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -277,15 +266,8 @@ public class ApplicationController {
                 try {
                     appProp.load(new FileInputStream("config/application.properties"));
                     appProp.setProperty("app.raum.datei", String.valueOf(this.raumPath));
-<<<<<<< HEAD
                     appProp.store(new FileOutputStream("config/application.properties"), null);
-
-=======
-                    appProp.store(fileOut, null);
-                    fileIn.close();
-                    fileOut.close();
                     this.raumController.getRaumList().setRaumList(RaumSerialize.readExcelIntoList(this.raumPath));
->>>>>>> baf2447c480d8d018ed8b4e4901db0246aa05f31
                     this.raumController.loadRaum();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
