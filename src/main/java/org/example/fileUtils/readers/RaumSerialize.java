@@ -1,4 +1,4 @@
-package org.example.fileUtils;
+package org.example.fileUtils.readers;
 
 import lombok.Data;
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
@@ -32,8 +32,8 @@ public class RaumSerialize {
         try (FileInputStream file = new FileInputStream(path.toFile());
              ReadableWorkbook wb = new ReadableWorkbook(file)) {
             Sheet sheet = wb.getFirstSheet();
-            sheet.read().forEach(row -> {
-                Raum raum = new Raum(row.getCellText(0));
+            sheet.read().subList(1, sheet.read().size()).forEach(row -> {
+                Raum raum = new Raum(row.getCellText(0), Integer.parseInt(row.getCellText(1)));
                 raumList.add(raum);
             });
         }

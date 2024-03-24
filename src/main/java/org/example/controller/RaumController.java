@@ -20,9 +20,10 @@ public class RaumController {
      * @Author Justin
      */
     public void loadRaum() {
-        this.raumList.getRaumList().forEach(row -> {
+        this.raumList.getRaumList().subList(1, this.raumList.getRaumList().size()).forEach(row -> {
             this.raumPanel.getRaumTableModel().addRow(new Object[]{
-                    row.getName()
+                    row.getName(),
+                    row.getCapacity()
             });
         });
     }

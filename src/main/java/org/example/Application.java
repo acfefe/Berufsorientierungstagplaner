@@ -3,9 +3,9 @@ package org.example;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import org.example.controller.*;
-import org.example.fileUtils.FirmaSerialize;
-import org.example.fileUtils.RaumSerialize;
-import org.example.fileUtils.SchuelerSerialize;
+import org.example.fileUtils.readers.FirmaSerialize;
+import org.example.fileUtils.readers.RaumSerialize;
+import org.example.fileUtils.readers.SchuelerSerialize;
 import org.example.gui.FirmaPanel;
 import org.example.gui.MainFrame;
 import org.example.gui.RaumPanel;
@@ -35,6 +35,7 @@ public class Application {
 
         List<Firma> firmen = FirmaSerialize.readExcelIntoList(Path.of(appProp.getProperty("app.veranstaltungs.datei")));
         FirmaList firmaList = new FirmaList(firmen);
+
         FirmaPanel firmaPanel = new FirmaPanel();
         FirmaController firmaController = new FirmaController(firmaList, firmaPanel);
 

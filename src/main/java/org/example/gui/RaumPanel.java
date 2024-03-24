@@ -9,7 +9,7 @@ import java.awt.*;
 @Data
 public class RaumPanel extends JPanel {
 
-    private final DefaultTableModel raumTableModel = new DefaultTableModel(new Object[]{"name"}, 0) {
+    private final DefaultTableModel raumTableModel = new DefaultTableModel(new Object[]{"Name/Nr", "Kapazität"}, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;

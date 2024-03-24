@@ -1,9 +1,10 @@
 package org.example.controller;
 
 import lombok.Data;
-import org.example.fileUtils.FirmaSerialize;
-import org.example.fileUtils.RaumSerialize;
-import org.example.fileUtils.SchuelerSerialize;
+
+import org.example.fileUtils.readers.FirmaSerialize;
+import org.example.fileUtils.readers.RaumSerialize;
+import org.example.fileUtils.readers.SchuelerSerialize;
 import org.example.gui.MainFrame;
 import org.example.models.Firma;
 import org.example.models.Raum;
@@ -78,9 +79,6 @@ public class ApplicationController {
     }
 
     /**
-     * Ein Teil des Algorithmus, der Firmen zu räumen zu teilt
-     * @Author Felix, Finn
-     */
     public void assignRooms() {
         List<Raum> raumListe = raumController.getRaumList().getRaumList();
         List<Firma> firmen = firmaController.getFirmaList().getFirmen();
@@ -111,7 +109,7 @@ public class ApplicationController {
         raumController.getRaumList().setRaumList(raumListe);
         System.out.println(raumListe);
     }
-
+    */
 
 
     
@@ -182,180 +180,42 @@ public class ApplicationController {
     }
     
 
-    /**
-     * Öffnet einen FileChooser um die Schülerliste einzulesen
-     * @Author Finn & Justin
-     */
-/*
-    public void openSchuelerFile() {
-        this.mainFrame.getLoadSchueler().addActionListener(e -> {
-            JFileChooser jFileChooser = new JFileChooser(System.getProperty("user.dir"));
+    private void openFile(String dialogTitle, String propertyKey, Consumer<Path> afterOpenAction) {
+        JFileChooser jFileChooser = new JFileChooser(System.getProperty("user.dir"));
 
-            jFileChooser.setAcceptAllFileFilterUsed(false);
+        jFileChooser.setAcceptAllFileFilterUsed(false);
+        jFileChooser.setDialogTitle(dialogTitle);
 
-            jFileChooser.setDialogTitle("Wähle die Schueler-Excel-Liste aus");
+        FileNameExtensionFilter restrict = new FileNameExtensionFilter("Excel files", "xls", "xlsx");
+        jFileChooser.addChoosableFileFilter(restrict);
 
-            FileNameExtensionFilter restrict = new FileNameExtensionFilter("Excel files", "xls", "xlsx");
-            jFileChooser.addChoosableFileFilter(restrict);
+        int opt = jFileChooser.showOpenDialog(null);
 
-            int opt = jFileChooser.showOpenDialog(null);
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            Path selectedPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
 
-            if (opt == JFileChooser.APPROVE_OPTION) {
-                this.schuelerPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
-
-                try {
-                    if (Files.exists(userConfigPath)) {
-                        try (InputStream userPropStream = Files.newInputStream(userConfigPath)) {
-                            appProp.load(userPropStream);
-                        }
-                    } 
-                    appProp.setProperty("app.schueler.datei", String.valueOf(this.schuelerPath));
-                    appProp.store(new FileOutputStream(userConfigPath.toFile()), null);
-
-                    this.schuelerController.getSchuelerList().setSchueler(SchuelerSerialize.readExcelIntoList(this.schuelerPath));
-                    this.schuelerController.loadSchueler();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "An error occurred while opening the file: " + ex.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
-                    );                
+            try {
+                if (Files.exists(userConfigPath)) {
+                    try (InputStream userPropStream = Files.newInputStream(userConfigPath)) {
+                        appProp.load(userPropStream);
+                    }
                 }
-            }
-
-
-        });
-    }
-*/
-
-
-    /**
-     * Öffnet einen FileChooser um die Firmenliste einzulesen
-     * @Author Finn & Justin
-     */
-/*
-    public void openFirmaFile() {
-        this.mainFrame.getLoadFirma().addActionListener(e -> {
-            JFileChooser jFileChooser = new JFileChooser(System.getProperty("user.dir"));
-
-            jFileChooser.setAcceptAllFileFilterUsed(false);
-
-            jFileChooser.setDialogTitle("Wähle die Firmen-Excel-Liste aus");
-
-            FileNameExtensionFilter restrict = new FileNameExtensionFilter("Excel files", "xls", "xlsx");
-            jFileChooser.addChoosableFileFilter(restrict);
-
-            int opt = jFileChooser.showOpenDialog(null);
-
-            if (opt == JFileChooser.APPROVE_OPTION) {
-                this.firmaPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
-
-                try {
-                    if (Files.exists(userConfigPath)) {
-                        try (InputStream userPropStream = Files.newInputStream(userConfigPath)) {
-                            appProp.load(userPropStream);
-                        }
-                    } 
-                    appProp.setProperty("app.veranstaltungs.datei", String.valueOf(this.firmaPath));
-                    appProp.store(new FileOutputStream(userConfigPath.toFile()), null);
-
-                    this.firmaController.getFirmaList().setFirmen(FirmaSerialize.readExcelIntoList(this.firmaPath));
-                    this.firmaController.loadFirma();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "An error occurred while opening the file: " + ex.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
-                    );
+                appProp.setProperty(propertyKey, String.valueOf(selectedPath));
+                try (FileOutputStream fos = new FileOutputStream(userConfigPath.toFile())) {
+                    appProp.store(fos, null);
                 }
+
+                afterOpenAction.accept(selectedPath);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "An error occurred while opening the file: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
             }
-        });
-    }
-*/
-
-
-    /**
-     * Öffnet ein FileChooser um die RaumDatei einzulesen
-     * @Author Finn & Justin
-     */
-/*
-     public void openRaumFile() {
-        this.mainFrame.getLoadRaum().addActionListener(e -> {
-            JFileChooser jFileChooser = new JFileChooser(System.getProperty("user.dir"));
-
-            jFileChooser.setAcceptAllFileFilterUsed(false);
-
-            jFileChooser.setDialogTitle("Wähle die Raum-Excel-Liste aus");
-
-            FileNameExtensionFilter restrict = new FileNameExtensionFilter("Excel files", "xls", "xlsx");
-            jFileChooser.addChoosableFileFilter(restrict);
-
-            int opt = jFileChooser.showOpenDialog(null);
-
-            if (opt == JFileChooser.APPROVE_OPTION) {
-                this.raumPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
-
-                try {
-                    if (Files.exists(userConfigPath)) {
-                        try (InputStream userPropStream = Files.newInputStream(userConfigPath)) {
-                            appProp.load(userPropStream);
-                        }
-                    }                    
-                    appProp.setProperty("app.raum.datei", String.valueOf(this.raumPath));
-                    appProp.store(new FileOutputStream(userConfigPath.toFile()), null);
-                    this.raumController.getRaumList().setRaumList(RaumSerialize.readExcelIntoList(this.raumPath));
-                    this.raumController.loadRaum();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "An error occurred while opening the file: " + ex.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
-                    );
-                }
-            }
-        });
-    }
-*/
-
-private void openFile(String dialogTitle, String propertyKey, Consumer<Path> afterOpenAction) {
-    JFileChooser jFileChooser = new JFileChooser(System.getProperty("user.dir"));
-
-    jFileChooser.setAcceptAllFileFilterUsed(false);
-    jFileChooser.setDialogTitle(dialogTitle);
-
-    FileNameExtensionFilter restrict = new FileNameExtensionFilter("Excel files", "xls", "xlsx");
-    jFileChooser.addChoosableFileFilter(restrict);
-
-    int opt = jFileChooser.showOpenDialog(null);
-
-    if (opt == JFileChooser.APPROVE_OPTION) {
-        Path selectedPath = Path.of(jFileChooser.getSelectedFile().getAbsolutePath());
-
-        try {
-            if (Files.exists(userConfigPath)) {
-                try (InputStream userPropStream = Files.newInputStream(userConfigPath)) {
-                    appProp.load(userPropStream);
-                }
-            }
-            appProp.setProperty(propertyKey, String.valueOf(selectedPath));
-            try (FileOutputStream fos = new FileOutputStream(userConfigPath.toFile())) {
-                appProp.store(fos, null);
-            }
-
-            afterOpenAction.accept(selectedPath);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(
-                null,
-                "An error occurred while opening the file: " + ex.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
         }
     }
-}
 
     /**
      * Startet den Algorithmus auf Knopfdruck
@@ -363,8 +223,54 @@ private void openFile(String dialogTitle, String propertyKey, Consumer<Path> aft
      */
     public void startAlgorithm() {
         this.mainFrame.getStartBtn().addActionListener(e -> {
-            this.calculateWishNumber();
-            this.assignRooms();
+            // this.calculateWishNumber();
+            // this.assignRooms();
         });
     }
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

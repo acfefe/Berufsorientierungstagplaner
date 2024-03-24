@@ -1,4 +1,4 @@
-package org.example.fileUtils;
+package org.example.fileUtils.readers;
 
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
 import org.dhatim.fastexcel.reader.Row;
@@ -39,15 +39,11 @@ public class SchuelerSerialize {
                 schueler.setKlasse(row.getCellText(0));
                 schueler.setNachname(row.getCellText(1));
                 schueler.setVorname(row.getCellText(2));
-                int[] wahlen = {
-                        Integer.parseInt(!row.getCellText(3).isEmpty() ? row.getCellText(3) : "0"),
-                        Integer.parseInt(!row.getCellText(4).isEmpty() ? row.getCellText(4) : "0"),
-                        Integer.parseInt(!row.getCellText(5).isEmpty() ? row.getCellText(5) : "0"),
-                        Integer.parseInt(!row.getCellText(6).isEmpty() ? row.getCellText(6) : "0"),
-                        Integer.parseInt(!row.getCellText(7).isEmpty() ? row.getCellText(7) : "0"),
-                        Integer.parseInt(!row.getCellText(8).isEmpty() ? row.getCellText(8) : "0"),
-
-                };
+                int[] wahlen = new int[6];
+                for (int i = 0; i < wahlen.length; i++) {
+                    String cellText = row.getCellText(i + 3);
+                    wahlen[i] = Integer.parseInt(!cellText.isEmpty() ? cellText : "0");
+                }
                 schueler.setWahlen(wahlen);
                 schuelerList.add(schueler);
             }
